@@ -1,37 +1,20 @@
 # locus
 
+![home page](https://images.gitee.com/uploads/images/2019/0101/174701_5bd8e5e2_1941860.png "在这里输入图片标题")
+![console](https://images.gitee.com/uploads/images/2019/0101/174729_9b9c413e_1941860.png "在这里输入图片标题")
+
 #### 介绍
-跟踪objc send
+objective-c行为记录器，跟踪objc_send
 
-#### 软件架构
-软件架构说明
-
-
-#### 安装教程
-
-1. xxxx
-2. xxxx
-3. xxxx
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+模拟器使用, 勾选hook_objc_msgSend_x86.s参与编译
+真机使用5s以上机型，勾选hook_objc_msgSend.s参与编译
 
 
-#### 码云特技
+#### 注意事项
 
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+* 过滤器LCSFilterBlock中不能再次调用objc_send, 也就是调用oc方法（包括NSLog），会导致无限循环。
+* 目前此实现目的仅用于调试，不要用于线上代码。
+* 大家使用有问题，欢迎提issues
