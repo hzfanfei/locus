@@ -11,8 +11,8 @@ objective-c行为记录器，跟踪objc_send
 
 #### 使用说明
 
-模拟器使用, 勾选hook_objc_msgSend_x86.s参与编译
-真机使用5s以上机型，勾选hook_objc_msgSend.s参与编译
+* 模拟器使用, 勾选hook_objc_msgSend_x86.s参与编译
+* 真机使用5s以上机型，勾选hook_objc_msgSend.s参与编译
 
 
 #### 注意事项
