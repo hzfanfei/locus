@@ -1,7 +1,7 @@
 # locus
 
 ![home page](https://images.gitee.com/uploads/images/2019/0101/174701_5bd8e5e2_1941860.png "在这里输入图片标题")
-![console](https://images.gitee.com/uploads/images/2019/0101/174729_9b9c413e_1941860.png "在这里输入图片标题")
+![console](https://images.gitee.com/uploads/images/2019/0101/174810_b2d4e2b0_1941860.png "在这里输入图片标题")
 
 #### 介绍
 objective-c行为记录器，跟踪objc_send
