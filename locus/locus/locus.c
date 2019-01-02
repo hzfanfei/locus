@@ -57,6 +57,7 @@ uintptr_t before_objc_msgSend(id self, uintptr_t lr, SEL sel) {
         thread_lr_stack* next = malloc(sizeof(thread_lr_stack));
         ls->next = next;
         next->pre = ls;
+        next->next = NULL;
         next->lr = lr;
         pthread_setspecific(_thread_key, (void *)next);
     }
@@ -66,8 +67,9 @@ uintptr_t before_objc_msgSend(id self, uintptr_t lr, SEL sel) {
 uintptr_t get_lr() {
     thread_lr_stack* ls = pthread_getspecific(_thread_key);
     pthread_setspecific(_thread_key, (void *)ls->pre);
+    uintptr_t lr = ls->lr;
     free(ls);
-    return ls->lr;
+    return lr;
 }
 
 #ifdef __arm64__
