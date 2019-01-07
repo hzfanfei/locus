@@ -42,7 +42,7 @@ typedef struct {
 
 uintptr_t before_objc_msgSend(id self, uintptr_t lr, SEL sel) {
     
-    if (_filter_block((char *)object_getClassName(self), (char *)sel) > 0) {
+    if (_filter_block && _filter_block((char *)object_getClassName(self), (char *)sel) > 0) {
         printf("class %s, selector %s\n", (char *)object_getClassName(self), (char *)sel);
     }
     
