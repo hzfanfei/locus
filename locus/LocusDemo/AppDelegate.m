@@ -39,7 +39,6 @@ int reality(Class cls, SEL sel)
         NSString* sSelector = [NSString stringWithFormat:@"%s", selName];
         Class klass = objc_getClass(className);
         if ([sClass hasPrefix:@"LCUS"]
-            && ![sSelector hasPrefix:@"_"]
             && reality(klass, NSSelectorFromString(sSelector))){
             return 1;
         }
