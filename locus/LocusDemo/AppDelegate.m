@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "locus.h"
-
+#import <objc/runtime.h>
 @interface AppDelegate ()
 
 @end
@@ -16,14 +16,36 @@
 @implementation AppDelegate
 
 
+int reality(Class cls, SEL sel)
+{
+    unsigned int methodCount;
+    Method *methods = class_copyMethodList(cls, &methodCount);
+    for (unsigned int i = 0; i < methodCount; i++) {
+        Method method = methods[i];
+        SEL selector = method_getName(method);
+        if (selector == sel) {
+            return 1;
+        }
+    }
+    free(methods);
+    return 0;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    lcs_start(^int(char *className, char *selName) {
-        if (strncmp(className, "LCUS", 4) == 0) {
+    // global block
+    id filter = ^int(char *className, char *selName) {
+        NSString* sClass = [NSString stringWithFormat:@"%s", className];
+        NSString* sSelector = [NSString stringWithFormat:@"%s", selName];
+        Class klass = objc_getClass(className);
+        if ([sClass hasPrefix:@"LCUS"]
+            && ![sSelector hasPrefix:@"_"]
+            && reality(klass, NSSelectorFromString(sSelector))){
             return 1;
         }
         return 0;
-    });
+    };
+    lcs_start(filter);
     
     return YES;
 }
