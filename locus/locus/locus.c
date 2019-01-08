@@ -42,6 +42,16 @@ typedef struct {
     uintptr_t lr;
 } thread_lr_stack;
 
+void lcs_open()
+{
+    pthread_setspecific(_thread_switch_key, &lcs_switch_open);
+}
+
+void lcs_close()
+{
+    pthread_setspecific(_thread_switch_key, &lcs_switch_close);
+}
+
 uintptr_t before_objc_msgSend(id self, uintptr_t lr, SEL sel) {
     void* p_switch = pthread_getspecific(_thread_switch_key);
     int lcs_switch = 1;
@@ -113,15 +123,5 @@ void lcs_start(LCSFilterBlock filter) {
 }
 
 #endif
-
-void lcs_open()
-{
-    pthread_setspecific(_thread_switch_key, &lcs_switch_open);
-}
-
-void lcs_close()
-{
-    pthread_setspecific(_thread_switch_key, &lcs_switch_close);
-}
 
 
