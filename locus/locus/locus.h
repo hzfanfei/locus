@@ -9,6 +9,7 @@
 #ifndef hookObjcSend_h
 #define hookObjcSend_h
 
+typedef int(*LCSFilterCBlock)(char* className, char* selName);
 typedef int(^LCSFilterBlock)(char* className, char* selName);
 
 void lcs_start(LCSFilterBlock block);

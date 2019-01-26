@@ -9,7 +9,31 @@
 #import "AppDelegate.h"
 #import "locus.h"
 #import <objc/runtime.h>
+
+@interface NSBundle (DDAdditions)
+
+- (NSArray *)getClassNames;
+
+@end
+
+@implementation NSBundle (DDAdditions)
+
+-(NSArray *)getClassNames{
+    NSMutableArray* classNames = [NSMutableArray array];
+    unsigned int count = 0;
+    const char** classes = objc_copyClassNamesForImage([[[NSBundle mainBundle] executablePath] UTF8String], &count);
+    for(unsigned int i=0;i<count;i++){
+        NSString* className = [NSString stringWithUTF8String:classes[i]];
+        [classNames addObject:className];
+    }
+    return classNames;
+}
+
+@end
+
 @interface AppDelegate ()
+
+@property (nonatomic) id block;
 
 @end
 
@@ -31,19 +55,28 @@ int reality(Class cls, SEL sel)
     return 0;
 }
 
+static id block = nil;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    NSArray* array = [[NSBundle mainBundle] getClassNames];
     
     // global block
     id filter = ^int(char *className, char *selName) {
         NSString* sClass = [NSString stringWithFormat:@"%s", className];
         NSString* sSelector = [NSString stringWithFormat:@"%s", selName];
         Class klass = objc_getClass(className);
-        if ([sClass hasPrefix:@"LCUS"]
+        if ([array containsObject:sClass]
             && reality(klass, NSSelectorFromString(sSelector))){
             return 1;
         }
         return 0;
     };
+    
+    static id block = nil;
+    
+    block = filter;
+    
     lcs_start(filter);
     
     return YES;

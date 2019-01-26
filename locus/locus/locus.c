@@ -71,6 +71,7 @@ uintptr_t before_objc_msgSend(id self, uintptr_t lr, SEL sel) {
         lcs_open();
         return result;
     };
+
     if (lcs_switch > 0 && filter_block() > 0) {
         printf("class %s, selector %s\n", (char *)object_getClassName(self), (char *)sel);
     }
@@ -107,6 +108,7 @@ void lcs_start(LCSFilterBlock filter) {
     
     _filter_block = filter;
     
+    pthread_key_create(&_thread_switch_key, NULL);
     pthread_key_create(&_thread_lr_stack_key, NULL);
     rebind_symbols((struct rebinding[1]){{"objc_msgSend", hook_objc_msgSend, (void *)&orig_objc_msgSend}}, 1);
 }
