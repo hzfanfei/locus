@@ -24,6 +24,8 @@
 #include <dispatch/dispatch.h>
 #import <objc/runtime.h>
 
+#include "LocusArgPrinter.h"
+
 #include "hook_objc_msgSend.h"
 #include "hook_objc_msgSend_x86.h"
 
@@ -50,7 +52,7 @@ void lcs_close()
     pthread_setspecific(_thread_switch_key, &lcs_switch_close);
 }
 
-uintptr_t before_objc_msgSend(id self, uintptr_t lr, SEL sel) {
+uintptr_t before_objc_msgSend(id self, SEL sel, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t lr) {
     void* p_switch = pthread_getspecific(_thread_switch_key);
     int lcs_switch = 1;
     if (p_switch == NULL) {
@@ -72,6 +74,9 @@ uintptr_t before_objc_msgSend(id self, uintptr_t lr, SEL sel) {
 
     if (lcs_switch > 0 && filter_block() > 0) {
         printf("class %s, selector %s\n", (char *)object_getClassName(self), (char *)sel);
+        lcs_close();
+        printArgs(arg1, arg2, arg3, self, sel);
+        lcs_open();
     }
     
     thread_lr_stack* ls = pthread_getspecific(_thread_lr_stack_key);

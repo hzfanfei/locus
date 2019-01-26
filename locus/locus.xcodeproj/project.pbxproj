@@ -21,6 +21,8 @@
 		E377697621FC13ED0050B72F /* hook_objc_msgSend.s in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9521DB263E005DAD5C /* hook_objc_msgSend.s */; };
 		E377697921FC26CB0050B72F /* Locus.m in Sources */ = {isa = PBXBuildFile; fileRef = E377697821FC26CB0050B72F /* Locus.m */; };
 		E377697A21FC26CB0050B72F /* Locus.m in Sources */ = {isa = PBXBuildFile; fileRef = E377697821FC26CB0050B72F /* Locus.m */; };
+		E377698121FCBCEC0050B72F /* LocusArgPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = E377698021FCBCEC0050B72F /* LocusArgPrinter.m */; };
+		E377698221FCBCEC0050B72F /* LocusArgPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = E377698021FCBCEC0050B72F /* LocusArgPrinter.m */; };
 		E393701F21DAF6370012235D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E393701E21DAF6370012235D /* AppDelegate.m */; };
 		E393702221DAF6370012235D /* LCUSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E393702121DAF6370012235D /* LCUSViewController.m */; };
 		E393702521DAF6370012235D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E393702321DAF6370012235D /* Main.storyboard */; };
@@ -38,6 +40,8 @@
 		E377697521FC13C10050B72F /* locus copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "locus copy-Info.plist"; path = "/Users/fanfei/work/locus/locus/locus copy-Info.plist"; sourceTree = "<absolute>"; };
 		E377697721FC26CB0050B72F /* Locus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Locus.h; sourceTree = "<group>"; };
 		E377697821FC26CB0050B72F /* Locus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Locus.m; sourceTree = "<group>"; };
+		E377697F21FCBCEC0050B72F /* LocusArgPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocusArgPrinter.h; sourceTree = "<group>"; };
+		E377698021FCBCEC0050B72F /* LocusArgPrinter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocusArgPrinter.m; sourceTree = "<group>"; };
 		E393701A21DAF6370012235D /* locus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = locus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E393701D21DAF6370012235D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E393701E21DAF6370012235D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -132,6 +136,8 @@
 				E39B1F9421DB263E005DAD5C /* locusImpl.h */,
 				E377697721FC26CB0050B72F /* Locus.h */,
 				E377697821FC26CB0050B72F /* Locus.m */,
+				E377697F21FCBCEC0050B72F /* LocusArgPrinter.h */,
+				E377698021FCBCEC0050B72F /* LocusArgPrinter.m */,
 			);
 			path = locus;
 			sourceTree = "<group>";
@@ -237,6 +243,7 @@
 				E377696421FC13C10050B72F /* locusImpl.c in Sources */,
 				E377696521FC13C10050B72F /* LCUSTableView.m in Sources */,
 				E377696621FC13C10050B72F /* hook_objc_msgSend_x86.s in Sources */,
+				E377698221FCBCEC0050B72F /* LocusArgPrinter.m in Sources */,
 				E377696721FC13C10050B72F /* LCUSViewController.m in Sources */,
 				E377696821FC13C10050B72F /* main.m in Sources */,
 				E377696921FC13C10050B72F /* LCUSTableViewCell.m in Sources */,
@@ -253,6 +260,7 @@
 				E39B1F9A21DB263E005DAD5C /* locusImpl.c in Sources */,
 				E393703521DAF7940012235D /* LCUSTableView.m in Sources */,
 				E377697621FC13ED0050B72F /* hook_objc_msgSend.s in Sources */,
+				E377698121FCBCEC0050B72F /* LocusArgPrinter.m in Sources */,
 				E393702221DAF6370012235D /* LCUSViewController.m in Sources */,
 				E393702D21DAF6380012235D /* main.m in Sources */,
 				E39B1F8F21DB2355005DAD5C /* LCUSTableViewCell.m in Sources */,

@@ -34,8 +34,7 @@ movq  %r13, -0x18(%rbp)
 movq  %r14, -0x10(%rbp)
 movq  %r15, -0x8(%rbp)
 
-movq %rsi, %rdx
-movq 0x8(%rbp), %rsi
+movq 0x8(%rbp), %r9
 
 call _before_objc_msgSend
 
