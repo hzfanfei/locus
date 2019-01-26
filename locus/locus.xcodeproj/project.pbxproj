@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E377696421FC13C10050B72F /* locus.c in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9621DB263E005DAD5C /* locus.c */; };
+		E377696421FC13C10050B72F /* locusImpl.c in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9621DB263E005DAD5C /* locusImpl.c */; };
 		E377696521FC13C10050B72F /* LCUSTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E393703421DAF7940012235D /* LCUSTableView.m */; };
 		E377696621FC13C10050B72F /* hook_objc_msgSend_x86.s in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9C21DB31AC005DAD5C /* hook_objc_msgSend_x86.s */; };
 		E377696721FC13C10050B72F /* LCUSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E393702121DAF6370012235D /* LCUSViewController.m */; };
@@ -19,6 +19,8 @@
 		E377696F21FC13C10050B72F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E393702621DAF6380012235D /* Assets.xcassets */; };
 		E377697021FC13C10050B72F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E393702321DAF6370012235D /* Main.storyboard */; };
 		E377697621FC13ED0050B72F /* hook_objc_msgSend.s in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9521DB263E005DAD5C /* hook_objc_msgSend.s */; };
+		E377697921FC26CB0050B72F /* Locus.m in Sources */ = {isa = PBXBuildFile; fileRef = E377697821FC26CB0050B72F /* Locus.m */; };
+		E377697A21FC26CB0050B72F /* Locus.m in Sources */ = {isa = PBXBuildFile; fileRef = E377697821FC26CB0050B72F /* Locus.m */; };
 		E393701F21DAF6370012235D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E393701E21DAF6370012235D /* AppDelegate.m */; };
 		E393702221DAF6370012235D /* LCUSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E393702121DAF6370012235D /* LCUSViewController.m */; };
 		E393702521DAF6370012235D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E393702321DAF6370012235D /* Main.storyboard */; };
@@ -28,12 +30,14 @@
 		E393703521DAF7940012235D /* LCUSTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E393703421DAF7940012235D /* LCUSTableView.m */; };
 		E39B1F8F21DB2355005DAD5C /* LCUSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F8E21DB2355005DAD5C /* LCUSTableViewCell.m */; };
 		E39B1F9821DB263E005DAD5C /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9221DB263E005DAD5C /* fishhook.c */; };
-		E39B1F9A21DB263E005DAD5C /* locus.c in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9621DB263E005DAD5C /* locus.c */; };
+		E39B1F9A21DB263E005DAD5C /* locusImpl.c in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9621DB263E005DAD5C /* locusImpl.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E377697421FC13C10050B72F /* locus simulate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "locus simulate.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E377697521FC13C10050B72F /* locus copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "locus copy-Info.plist"; path = "/Users/fanfei/work/locus/locus/locus copy-Info.plist"; sourceTree = "<absolute>"; };
+		E377697721FC26CB0050B72F /* Locus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Locus.h; sourceTree = "<group>"; };
+		E377697821FC26CB0050B72F /* Locus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Locus.m; sourceTree = "<group>"; };
 		E393701A21DAF6370012235D /* locus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = locus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E393701D21DAF6370012235D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E393701E21DAF6370012235D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -50,9 +54,9 @@
 		E39B1F8E21DB2355005DAD5C /* LCUSTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LCUSTableViewCell.m; sourceTree = "<group>"; };
 		E39B1F9221DB263E005DAD5C /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
 		E39B1F9321DB263E005DAD5C /* hook_objc_msgSend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hook_objc_msgSend.h; sourceTree = "<group>"; };
-		E39B1F9421DB263E005DAD5C /* locus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = locus.h; sourceTree = "<group>"; };
+		E39B1F9421DB263E005DAD5C /* locusImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = locusImpl.h; sourceTree = "<group>"; };
 		E39B1F9521DB263E005DAD5C /* hook_objc_msgSend.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = hook_objc_msgSend.s; sourceTree = "<group>"; };
-		E39B1F9621DB263E005DAD5C /* locus.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = locus.c; sourceTree = "<group>"; };
+		E39B1F9621DB263E005DAD5C /* locusImpl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = locusImpl.c; sourceTree = "<group>"; };
 		E39B1F9721DB263E005DAD5C /* fishhook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
 		E39B1F9B21DB31AC005DAD5C /* hook_objc_msgSend_x86.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hook_objc_msgSend_x86.h; sourceTree = "<group>"; };
 		E39B1F9C21DB31AC005DAD5C /* hook_objc_msgSend_x86.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = hook_objc_msgSend_x86.s; sourceTree = "<group>"; };
@@ -124,8 +128,10 @@
 				E39B1F9521DB263E005DAD5C /* hook_objc_msgSend.s */,
 				E39B1F9B21DB31AC005DAD5C /* hook_objc_msgSend_x86.h */,
 				E39B1F9C21DB31AC005DAD5C /* hook_objc_msgSend_x86.s */,
-				E39B1F9621DB263E005DAD5C /* locus.c */,
-				E39B1F9421DB263E005DAD5C /* locus.h */,
+				E39B1F9621DB263E005DAD5C /* locusImpl.c */,
+				E39B1F9421DB263E005DAD5C /* locusImpl.h */,
+				E377697721FC26CB0050B72F /* Locus.h */,
+				E377697821FC26CB0050B72F /* Locus.m */,
 			);
 			path = locus;
 			sourceTree = "<group>";
@@ -228,12 +234,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E377696421FC13C10050B72F /* locus.c in Sources */,
+				E377696421FC13C10050B72F /* locusImpl.c in Sources */,
 				E377696521FC13C10050B72F /* LCUSTableView.m in Sources */,
 				E377696621FC13C10050B72F /* hook_objc_msgSend_x86.s in Sources */,
 				E377696721FC13C10050B72F /* LCUSViewController.m in Sources */,
 				E377696821FC13C10050B72F /* main.m in Sources */,
 				E377696921FC13C10050B72F /* LCUSTableViewCell.m in Sources */,
+				E377697A21FC26CB0050B72F /* Locus.m in Sources */,
 				E377696A21FC13C10050B72F /* fishhook.c in Sources */,
 				E377696B21FC13C10050B72F /* AppDelegate.m in Sources */,
 			);
@@ -243,12 +250,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E39B1F9A21DB263E005DAD5C /* locus.c in Sources */,
+				E39B1F9A21DB263E005DAD5C /* locusImpl.c in Sources */,
 				E393703521DAF7940012235D /* LCUSTableView.m in Sources */,
 				E377697621FC13ED0050B72F /* hook_objc_msgSend.s in Sources */,
 				E393702221DAF6370012235D /* LCUSViewController.m in Sources */,
 				E393702D21DAF6380012235D /* main.m in Sources */,
 				E39B1F8F21DB2355005DAD5C /* LCUSTableViewCell.m in Sources */,
+				E377697921FC26CB0050B72F /* Locus.m in Sources */,
 				E39B1F9821DB263E005DAD5C /* fishhook.c in Sources */,
 				E393701F21DAF6370012235D /* AppDelegate.m in Sources */,
 			);
