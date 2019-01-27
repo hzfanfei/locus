@@ -77,7 +77,7 @@ void before_objc_msgSend(id self, SEL sel, ...) {
         lcs_close();
         va_list argptr;
         va_start(argptr, sel);
-        printArgs(self, sel, argptr);
+        printArgs((char *)object_getClassName(self), (char *)sel, argptr);
         va_end(argptr);
         lcs_open();
     }

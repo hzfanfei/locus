@@ -22,7 +22,7 @@
 		E377697921FC26CB0050B72F /* Locus.m in Sources */ = {isa = PBXBuildFile; fileRef = E377697821FC26CB0050B72F /* Locus.m */; };
 		E377697A21FC26CB0050B72F /* Locus.m in Sources */ = {isa = PBXBuildFile; fileRef = E377697821FC26CB0050B72F /* Locus.m */; };
 		E377698121FCBCEC0050B72F /* LocusArgPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = E377698021FCBCEC0050B72F /* LocusArgPrinter.m */; };
-		E377698221FCBCEC0050B72F /* LocusArgPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = E377698021FCBCEC0050B72F /* LocusArgPrinter.m */; };
+		E377698221FCBCEC0050B72F /* LocusArgPrinter.m in Sources */ = {isa = PBXBuildFile; fileRef = E377698021FCBCEC0050B72F /* LocusArgPrinter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E393701F21DAF6370012235D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E393701E21DAF6370012235D /* AppDelegate.m */; };
 		E393702221DAF6370012235D /* LCUSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E393702121DAF6370012235D /* LCUSViewController.m */; };
 		E393702521DAF6370012235D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E393702321DAF6370012235D /* Main.storyboard */; };

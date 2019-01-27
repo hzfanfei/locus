@@ -26,19 +26,23 @@ char getTypeFromTypeDescription(const char *typeDescription)
 }
 
 
-void printArgs(id cls, SEL sel, va_list argp)
+void printArgs(char *class_name, char* sel, va_list argp)
 {
-    NSMethodSignature *signature = [[cls class] instanceMethodSignatureForSelector:sel];
+    NSString* sClass = [NSString stringWithFormat:@"%s", class_name];
+    NSString* sSelector = [NSString stringWithFormat:@"%s", sel];
+    Class cls = NSClassFromString(sClass);
+    SEL selector = NSSelectorFromString(sSelector);
+    NSMethodSignature *signature = [cls instanceMethodSignatureForSelector:selector];
     if ([signature numberOfArguments] > 2) {
         for (NSInteger i = 0; i < [signature numberOfArguments] - 2; i++) {
             const char* typeDescription = [signature getArgumentTypeAtIndex:i + 2];
             char type = getTypeFromTypeDescription(typeDescription);
             switch (type) {
                 case '@':
-                    {
-                        NSString* description = [NSString stringWithFormat:@"%@", va_arg(argp, id)];
-                        printf("———— arg%ld: %s\n", i+1, description.UTF8String);
-                    }
+                {
+                    NSString* description = [NSString stringWithFormat:@"%@", va_arg(argp, id)];
+                    printf("———— arg%ld: %s\n", i+1, description.UTF8String);
+                }
                     break;
                 case 'B':
                     printf("———— arg%ld: %d\n", i+1, va_arg(argp, int));
