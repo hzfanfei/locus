@@ -74,13 +74,18 @@ void before_objc_msgSend(id self, SEL sel, ...) {
 
     if (lcs_switch > 0 && filter_block() > 0) {
         printf("class %s, selector %s\n", (char *)object_getClassName(self), (char *)sel);
+
+        // arm64 not support
+#ifndef __arm64__
         lcs_close();
         va_list argptr;
         va_start(argptr, sel);
         printArgs((char *)object_getClassName(self), (char *)sel, argptr);
         va_end(argptr);
         lcs_open();
+#endif
     }
+
 }
 
 uintptr_t save_lr(uintptr_t lr)
