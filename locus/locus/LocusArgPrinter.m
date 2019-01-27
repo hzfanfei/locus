@@ -54,11 +54,17 @@ void printArgs(char *class_name, char* sel, va_list argp)
                     printf("———— arg%ld: %ld\n", i+1, va_arg(argp, long));
                     break;
                 case 'q':
+                    printf("———— arg%ld: %llu\n", i+1, va_arg(argp, long long));
+                    break;
+                case 'Q':
                     printf("———— arg%ld: %llu\n", i+1, va_arg(argp, unsigned long long));
                     break;
                 case 'f':
                 case 'd':
                     printf("———— arg%ld: %lf\n", i+1, va_arg(argp, double));
+                    break;
+                case ':':
+                    printf("———— arg%ld: %s\n", i+1, va_arg(argp, char *));
                     break;
                 default:
                     break;
