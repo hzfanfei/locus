@@ -26,31 +26,35 @@ char getTypeFromTypeDescription(const char *typeDescription)
 }
 
 
-void printArgs(uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, id cls, SEL sel)
+void printArgs(id cls, SEL sel, va_list argp)
 {
-    uintptr_t args[] = {arg1, arg2, arg3};
     NSMethodSignature *signature = [[cls class] instanceMethodSignatureForSelector:sel];
     if ([signature numberOfArguments] > 2) {
-        for (NSInteger i = 0; i < [signature numberOfArguments] - 2 && i < 3; i++) {
+        for (NSInteger i = 0; i < [signature numberOfArguments] - 2; i++) {
             const char* typeDescription = [signature getArgumentTypeAtIndex:i + 2];
             char type = getTypeFromTypeDescription(typeDescription);
             switch (type) {
                 case '@':
                     {
-                        NSString* description = [NSString stringWithFormat:@"%@", args[i]];
+                        NSString* description = [NSString stringWithFormat:@"%@", va_arg(argp, id)];
                         printf("———— arg%ld: %s\n", i+1, description.UTF8String);
                     }
                     break;
+                case 'B':
+                    printf("———— arg%ld: %d\n", i+1, va_arg(argp, int));
+                    break;
                 case 'i':
+                    printf("———— arg%ld: %d\n", i+1, va_arg(argp, int));
+                    break;
                 case 'l':
+                    printf("———— arg%ld: %ld\n", i+1, va_arg(argp, long));
+                    break;
                 case 'q':
-                    printf("———— arg%ld: %ld\n", i+1, args[i]);
+                    printf("———— arg%ld: %llu\n", i+1, va_arg(argp, unsigned long long));
                     break;
                 case 'f':
-                    printf("———— arg%ld: %f\n", i+1, (float)args[i]);
-                    break;
                 case 'd':
-                    printf("———— arg%ld: %lf\n", i+1, (double)args[i]);
+                    printf("———— arg%ld: %lf\n", i+1, va_arg(argp, double));
                     break;
                 default:
                     break;

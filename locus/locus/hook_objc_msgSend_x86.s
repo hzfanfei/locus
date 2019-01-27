@@ -34,9 +34,11 @@ movq  %r13, -0x18(%rbp)
 movq  %r14, -0x10(%rbp)
 movq  %r15, -0x8(%rbp)
 
-movq 0x8(%rbp), %r9
-
 call _before_objc_msgSend
+
+movq 0x8(%rbp), %rdi
+
+call _save_lr
 
 movq   -0x210(%rbp), %xmm15
 movq   -0x200(%rbp), %xmm14

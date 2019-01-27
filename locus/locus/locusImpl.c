@@ -52,7 +52,7 @@ void lcs_close()
     pthread_setspecific(_thread_switch_key, &lcs_switch_close);
 }
 
-uintptr_t before_objc_msgSend(id self, SEL sel, uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t lr) {
+void before_objc_msgSend(id self, SEL sel, ...) {
     void* p_switch = pthread_getspecific(_thread_switch_key);
     int lcs_switch = 1;
     if (p_switch == NULL) {
@@ -75,10 +75,16 @@ uintptr_t before_objc_msgSend(id self, SEL sel, uintptr_t arg1, uintptr_t arg2, 
     if (lcs_switch > 0 && filter_block() > 0) {
         printf("class %s, selector %s\n", (char *)object_getClassName(self), (char *)sel);
         lcs_close();
-        printArgs(arg1, arg2, arg3, self, sel);
+        va_list argptr;
+        va_start(argptr, sel);
+        printArgs(self, sel, argptr);
+        va_end(argptr);
         lcs_open();
     }
-    
+}
+
+uintptr_t save_lr(uintptr_t lr)
+{
     thread_lr_stack* ls = pthread_getspecific(_thread_lr_stack_key);
     if (ls == NULL) {
         ls = malloc(sizeof(thread_lr_stack));

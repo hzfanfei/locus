@@ -15,6 +15,7 @@ static NSString* kLCUSTableViewCellIdentifier = @"kLCUSTableViewCellIdentifier";
 @interface LCUSViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) LCUSTableView* tableView;
+@property (nonatomic) CGFloat f;
 
 @end
 
