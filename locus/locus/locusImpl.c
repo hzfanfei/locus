@@ -29,6 +29,7 @@
 #include "hook_objc_msgSend.h"
 #include "hook_objc_msgSend_x86.h"
 
+static int lcs_print = 0;
 static int lcs_switch_open = 1;
 static int lcs_switch_close = 0;
 static pthread_key_t _thread_lr_stack_key;
@@ -72,7 +73,7 @@ void before_objc_msgSend(id self, SEL sel, ...) {
         return result;
     };
 
-    if (lcs_switch > 0 && filter_block() > 0) {
+    if (lcs_print > 0 && lcs_switch > 0 && filter_block() > 0) {
         printf("class %s, selector %s\n", (char *)object_getClassName(self), (char *)sel);
 
         // arm64 not support
@@ -114,6 +115,14 @@ uintptr_t get_lr() {
     uintptr_t lr = ls->lr;
     free(ls);
     return lr;
+}
+
+void lcs_stop_print() {
+    lcs_print = 0;
+}
+
+void lcs_resume_print() {
+    lcs_print = 1;
 }
 
 #ifdef __arm64__

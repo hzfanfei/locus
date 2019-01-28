@@ -7,6 +7,7 @@
 //
 
 #import "LocusView.h"
+#import "Locus.h"
 #import "LocusSettingViewController.h"
 
 @interface LocusView ()
@@ -41,9 +42,11 @@
 {
     if (self.isRecording) {
         self.recordButton.backgroundColor = [UIColor redColor];
+        [Locus stopPrint];
         self.isRecording = NO;
     } else {
         self.recordButton.backgroundColor = [UIColor blueColor];
+        [Locus resumePrint];
         self.isRecording = YES;
     }
 }

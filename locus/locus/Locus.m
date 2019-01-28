@@ -59,6 +59,16 @@ int reality(Class cls, SEL sel)
     lcs_start(filerBlockHolder);
 }
 
++ (void)stopPrint
+{
+    lcs_stop_print();
+}
+
++ (void)resumePrint
+{
+    lcs_resume_print();
+}
+
 static UIView* _locusView = nil;
 static UIPanGestureRecognizer* _gesture = nil;
 static double _viewWidth = 95.0;
@@ -98,6 +108,11 @@ static double _viewHeight = 50.0;
 
 + (void)showUI
 {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [Locus start];
+    });
+    
     _locusView = [[LocusView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - _viewWidth - 5, [Locus safeAreaTop], _viewWidth, _viewHeight)];
     _locusView.backgroundColor = [UIColor lightGrayColor];
     [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:_locusView];
