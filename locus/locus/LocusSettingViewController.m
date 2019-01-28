@@ -31,13 +31,13 @@ static NSString* kLocusSettingTableViewCellIdentifier = @"kLocusSettingTableView
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    self.switchList = @[@"print system class", @"print custom class", @"print super methods", @"print args"];
+    self.switchList = @[LOCUS_PRINT_SYSTEM_CLASS, LOCUS_PRINT_CUSTOM_CLASS, LOCUS_PRINT_SUPER_METHODS, LOCUS_PRINT_ARGS];
     
     NSDictionary* switchJson = [Locus getConfig];
     if (switchJson) {
         self.switchJson = [switchJson mutableCopy];
     } else {
-        self.switchJson = [@{@"print system class": @NO, @"print custom class": @YES, @"print super methods": @NO, @"print args": @YES} mutableCopy];
+        self.switchJson = [@{LOCUS_PRINT_SYSTEM_CLASS: @NO, LOCUS_PRINT_CUSTOM_CLASS: @YES, LOCUS_PRINT_SUPER_METHODS: @NO, LOCUS_PRINT_ARGS: @YES} mutableCopy];
     }
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kLocusSettingTableViewCellIdentifier];
     
@@ -48,12 +48,16 @@ static NSString* kLocusSettingTableViewCellIdentifier = @"kLocusSettingTableView
 - (void)back
 {
     [Locus setConfig:self.switchJson];
+    if ([[self.switchJson objectForKey:LOCUS_PRINT_SYSTEM_CLASS] boolValue] || [[self.switchJson objectForKey:LOCUS_PRINT_SUPER_METHODS] boolValue]) {
+        [self.switchJson setObject:@NO forKey:LOCUS_PRINT_ARGS];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)defaultConfig
 {
-    self.switchJson = [@{@"print system class": @NO, @"print custom class": @YES, @"print super methods": @NO, @"print args": @YES} mutableCopy];
+    self.switchJson = [@{LOCUS_PRINT_SYSTEM_CLASS: @NO, LOCUS_PRINT_CUSTOM_CLASS: @YES, LOCUS_PRINT_SUPER_METHODS: @NO, LOCUS_PRINT_ARGS: @YES} mutableCopy];
     [self.tableView reloadData];
 }
 

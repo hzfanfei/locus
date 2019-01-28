@@ -8,6 +8,7 @@
 
 #import "Locus.h"
 #import "LocusView.h"
+#import "Locus+Config.h"
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
@@ -43,17 +44,60 @@ int reality(Class cls, SEL sel)
 
 + (void)start
 {
+    // add cache
+    [Locus getConfig];
+    
     NSArray* classNames = [self getClassNamesFromBundle];
     
     id filter = ^int(char *className, char *selName) {
         NSString* sClass = [NSString stringWithFormat:@"%s", className];
         NSString* sSelector = [NSString stringWithFormat:@"%s", selName];
         Class klass = objc_getClass(className);
-        if ([classNames containsObject:sClass]
-            && reality(klass, NSSelectorFromString(sSelector))){
-            return 1;
+
+        NSDictionary* config = [Locus getConfig];
+        if (config) {
+            BOOL system = [[config objectForKey:LOCUS_PRINT_SYSTEM_CLASS] boolValue];
+            BOOL custom = [[config objectForKey:LOCUS_PRINT_CUSTOM_CLASS] boolValue];
+            BOOL super_methods = [[config objectForKey:LOCUS_PRINT_SUPER_METHODS] boolValue];
+            BOOL args = [[config objectForKey:LOCUS_PRINT_ARGS] boolValue];
+
+            int result  = 0;
+            if (!system && !custom) {
+                return 0;
+            } else if (system && custom) {
+                result = 1;
+            } else {
+                if (system) {
+                    result = ![classNames containsObject:sClass];
+                } else {
+                    result = [classNames containsObject:sClass];
+                }
+            }
+            
+            if (result == 0) {
+                return 0;
+            }
+
+            if (!super_methods) {
+                result = reality(klass, NSSelectorFromString(sSelector));
+                if (result == 0) {
+                    return 0;
+                }
+            }
+
+            if (args) {
+                result = 2;
+            } else {
+                result = 1;
+            }
+            return result;
+        } else {
+            if ([classNames containsObject:sClass]
+                && reality(klass, NSSelectorFromString(sSelector))){
+                return 2;
+            }
+            return 0;
         }
-        return 0;
     };
     filerBlockHolder = filter;
     lcs_start(filerBlockHolder);

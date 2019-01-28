@@ -8,12 +8,17 @@
 
 #import "Locus.h"
 
+#define LOCUS_PRINT_SYSTEM_CLASS @"print system class"
+#define LOCUS_PRINT_CUSTOM_CLASS @"print custom class"
+#define LOCUS_PRINT_SUPER_METHODS @"print super methods"
+#define LOCUS_PRINT_ARGS @"print args"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Locus (Config)
 
-+ (NSDictionary *)getConfig;
-+ (void)setConfig:(NSDictionary *)config;
++ (NSMutableDictionary *)getConfig;
++ (void)setConfig:(NSMutableDictionary *)config;
 
 @end
 
