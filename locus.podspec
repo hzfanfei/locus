@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "locus"
-  s.version      = "1.0"
+  s.version      = "1.1"
   s.summary      = "track your code on debug"
   s.platform     = :ios, "11.0"
   
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/hzfanfei/locus.git"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "fanfei" => "hzfanfei@163.com" }
-  s.source       = { :git => "https://github.com/hzfanfei/locus.git", :tag => "1.0" }
+  s.source       = { :git => "https://github.com/hzfanfei/locus.git", :tag => s.version }
   s.source_files = "locus/locus/*.{h,m,c}", "locus/locus/hook_objc_msgSend_x86.s"
   s.public_header_files = "locus/**/*.h"
   s.requires_arc = true
