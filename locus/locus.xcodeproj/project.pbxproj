@@ -33,6 +33,12 @@
 		E39B1F8F21DB2355005DAD5C /* LCUSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F8E21DB2355005DAD5C /* LCUSTableViewCell.m */; };
 		E39B1F9821DB263E005DAD5C /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9221DB263E005DAD5C /* fishhook.c */; };
 		E39B1F9A21DB263E005DAD5C /* locusImpl.c in Sources */ = {isa = PBXBuildFile; fileRef = E39B1F9621DB263E005DAD5C /* locusImpl.c */; };
+		FD00995D21FEB1B100D52D3A /* LocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00995C21FEB1B100D52D3A /* LocusView.m */; };
+		FD00995E21FEB1B100D52D3A /* LocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00995C21FEB1B100D52D3A /* LocusView.m */; };
+		FD00997421FEE90900D52D3A /* LocusSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00997321FEE90900D52D3A /* LocusSettingViewController.m */; };
+		FD00997521FEE90900D52D3A /* LocusSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00997321FEE90900D52D3A /* LocusSettingViewController.m */; };
+		FD00997821FEF5ED00D52D3A /* Locus+Config.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00997721FEF5ED00D52D3A /* Locus+Config.m */; };
+		FD00997921FEF5EE00D52D3A /* Locus+Config.m in Sources */ = {isa = PBXBuildFile; fileRef = FD00997721FEF5ED00D52D3A /* Locus+Config.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +70,12 @@
 		E39B1F9721DB263E005DAD5C /* fishhook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
 		E39B1F9B21DB31AC005DAD5C /* hook_objc_msgSend_x86.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hook_objc_msgSend_x86.h; sourceTree = "<group>"; };
 		E39B1F9C21DB31AC005DAD5C /* hook_objc_msgSend_x86.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = hook_objc_msgSend_x86.s; sourceTree = "<group>"; };
+		FD00995B21FEB1B100D52D3A /* LocusView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocusView.h; sourceTree = "<group>"; };
+		FD00995C21FEB1B100D52D3A /* LocusView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocusView.m; sourceTree = "<group>"; };
+		FD00997221FEE90900D52D3A /* LocusSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocusSettingViewController.h; sourceTree = "<group>"; };
+		FD00997321FEE90900D52D3A /* LocusSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocusSettingViewController.m; sourceTree = "<group>"; };
+		FD00997621FEF5ED00D52D3A /* Locus+Config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Locus+Config.h"; sourceTree = "<group>"; };
+		FD00997721FEF5ED00D52D3A /* Locus+Config.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Locus+Config.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +148,14 @@
 				E39B1F9421DB263E005DAD5C /* locusImpl.h */,
 				E377697721FC26CB0050B72F /* Locus.h */,
 				E377697821FC26CB0050B72F /* Locus.m */,
+				FD00997621FEF5ED00D52D3A /* Locus+Config.h */,
+				FD00997721FEF5ED00D52D3A /* Locus+Config.m */,
 				E377697F21FCBCEC0050B72F /* LocusArgPrinter.h */,
 				E377698021FCBCEC0050B72F /* LocusArgPrinter.m */,
+				FD00995B21FEB1B100D52D3A /* LocusView.h */,
+				FD00995C21FEB1B100D52D3A /* LocusView.m */,
+				FD00997221FEE90900D52D3A /* LocusSettingViewController.h */,
+				FD00997321FEE90900D52D3A /* LocusSettingViewController.m */,
 			);
 			path = locus;
 			sourceTree = "<group>";
@@ -242,9 +260,12 @@
 			files = (
 				E377696421FC13C10050B72F /* locusImpl.c in Sources */,
 				E377696521FC13C10050B72F /* LCUSTableView.m in Sources */,
+				FD00997521FEE90900D52D3A /* LocusSettingViewController.m in Sources */,
 				E377696621FC13C10050B72F /* hook_objc_msgSend_x86.s in Sources */,
 				E377698221FCBCEC0050B72F /* LocusArgPrinter.m in Sources */,
+				FD00995E21FEB1B100D52D3A /* LocusView.m in Sources */,
 				E377696721FC13C10050B72F /* LCUSViewController.m in Sources */,
+				FD00997921FEF5EE00D52D3A /* Locus+Config.m in Sources */,
 				E377696821FC13C10050B72F /* main.m in Sources */,
 				E377696921FC13C10050B72F /* LCUSTableViewCell.m in Sources */,
 				E377697A21FC26CB0050B72F /* Locus.m in Sources */,
@@ -259,9 +280,12 @@
 			files = (
 				E39B1F9A21DB263E005DAD5C /* locusImpl.c in Sources */,
 				E393703521DAF7940012235D /* LCUSTableView.m in Sources */,
+				FD00997421FEE90900D52D3A /* LocusSettingViewController.m in Sources */,
 				E377697621FC13ED0050B72F /* hook_objc_msgSend.s in Sources */,
 				E377698121FCBCEC0050B72F /* LocusArgPrinter.m in Sources */,
+				FD00995D21FEB1B100D52D3A /* LocusView.m in Sources */,
 				E393702221DAF6370012235D /* LCUSViewController.m in Sources */,
+				FD00997821FEF5ED00D52D3A /* Locus+Config.m in Sources */,
 				E393702D21DAF6380012235D /* main.m in Sources */,
 				E39B1F8F21DB2355005DAD5C /* LCUSTableViewCell.m in Sources */,
 				E377697921FC26CB0050B72F /* Locus.m in Sources */,

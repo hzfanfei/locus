@@ -7,6 +7,8 @@
 //
 
 #import "Locus.h"
+#import "LocusView.h"
+#import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
 static id filerBlockHolder = nil;
@@ -55,6 +57,58 @@ int reality(Class cls, SEL sel)
     };
     filerBlockHolder = filter;
     lcs_start(filerBlockHolder);
+}
+
+static UIView* _locusView = nil;
+static UIPanGestureRecognizer* _gesture = nil;
+static double _viewWidth = 95.0;
+static double _viewHeight = 50.0;
+
++ (NSInteger)safeAreaTop
+{
+    NSInteger top = 0;
+    if (@available(iOS 11.0, *)) {
+        if ([[UIApplication sharedApplication] keyWindow].safeAreaInsets.top > 0.0) {
+            top = [[UIApplication sharedApplication] keyWindow].safeAreaInsets.top;
+        }
+    }
+    return top;
+}
+
++ (UIPanGestureRecognizer *)gesture
+{
+    if (!_gesture) {
+        _gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    }
+    
+    return _gesture;
+}
+
++ (UIView *)windowView
+{
+    return [UIApplication sharedApplication].keyWindow.rootViewController.view;
+}
+
++ (void)handlePanGesture:(UIPanGestureRecognizer *)sender
+{
+    CGPoint point = [sender translationInView:[self windowView]];
+    sender.view.center = CGPointMake(sender.view.center.x + point.x, sender.view.center.y+point.y);
+    [sender setTranslation:CGPointMake(0, 0) inView:[self windowView]];
+}
+
++ (void)showUI
+{
+    _locusView = [[LocusView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - _viewWidth - 5, [Locus safeAreaTop], _viewWidth, _viewHeight)];
+    _locusView.backgroundColor = [UIColor lightGrayColor];
+    [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:_locusView];
+    [_locusView addGestureRecognizer:[self gesture]];
+}
+
++ (void)hideUI
+{
+    if (_locusView) {
+        [_locusView removeFromSuperview];
+    }
 }
 
 @end

@@ -9,13 +9,14 @@
 #import "LCUSViewController.h"
 #import "LCUSTableView.h"
 #import "LCUSTableViewCell.h"
+#import "locus.h"
 
 static NSString* kLCUSTableViewCellIdentifier = @"kLCUSTableViewCellIdentifier";
 
 @interface LCUSViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) LCUSTableView* tableView;
-@property (nonatomic) CGFloat f;
+@property (nonatomic) BOOL isShowLocus;
 
 @end
 
@@ -29,6 +30,9 @@ static NSString* kLCUSTableViewCellIdentifier = @"kLCUSTableViewCellIdentifier";
     self.tableView.dataSource = self;
     [self.tableView registerClass:[LCUSTableViewCell class] forCellReuseIdentifier:kLCUSTableViewCellIdentifier];
     [self.view addSubview:self.tableView];
+    
+    [UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;
+    [self becomeFirstResponder];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -51,5 +55,16 @@ static NSString* kLCUSTableViewCellIdentifier = @"kLCUSTableViewCellIdentifier";
     return cell;
 }
 
+#pragma marks
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (self.isShowLocus) {
+        [Locus hideUI];
+        self.isShowLocus = NO;
+    } else {
+        [Locus showUI];
+        self.isShowLocus = YES;
+    }
+    return;
+}
 
 @end

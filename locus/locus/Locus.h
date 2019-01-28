@@ -15,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)start;
 
++ (void)showUI;
+
++ (void)hideUI;
+
 @end
 
 NS_ASSUME_NONNULL_END
