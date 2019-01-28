@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "locus.h"
 
 @interface AppDelegate ()
 

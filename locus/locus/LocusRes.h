@@ -8,10 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface LocusRes : NSObject
-
-@end
-
-NS_ASSUME_NONNULL_END
+extern NSString* LocusIconRecordStart;
+extern NSString* LocusIconRecordEnd;
+extern NSString* LocusIconSetting;

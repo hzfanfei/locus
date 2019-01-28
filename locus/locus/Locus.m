@@ -51,6 +51,9 @@ int reality(Class cls, SEL sel)
     
     id filter = ^int(char *className, char *selName) {
         NSString* sClass = [NSString stringWithFormat:@"%s", className];
+        if ([[sClass lowercaseString] hasPrefix:@"locus"]) {
+            return 0;
+        }
         NSString* sSelector = [NSString stringWithFormat:@"%s", selName];
         Class klass = objc_getClass(className);
 
@@ -115,8 +118,8 @@ int reality(Class cls, SEL sel)
 
 static UIView* _locusView = nil;
 static UIPanGestureRecognizer* _gesture = nil;
-static double _viewWidth = 95.0;
-static double _viewHeight = 50.0;
+static double _viewWidth = 55.0;
+static double _viewHeight = 43.0;
 
 + (NSInteger)safeAreaTop
 {
@@ -145,10 +148,40 @@ static double _viewHeight = 50.0;
 
 + (void)handlePanGesture:(UIPanGestureRecognizer *)sender
 {
-    CGPoint point = [sender translationInView:[self windowView]];
-    sender.view.center = CGPointMake(sender.view.center.x + point.x, sender.view.center.y+point.y);
-    [sender setTranslation:CGPointMake(0, 0) inView:[self windowView]];
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        CGPoint point = [sender translationInView:[self windowView]];
+        sender.view.center = CGPointMake(sender.view.center.x + point.x, sender.view.center.y+point.y);
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = sender.view.frame;
+            
+            if (frame.origin.x < 0) {
+                frame.origin.x = 5;
+            }
+            
+            if (frame.origin.y < 0) {
+                frame.origin.y = 5;
+            }
+            
+            NSInteger screenWidth = [UIScreen mainScreen].bounds.size.width;
+            NSInteger screenHeight = [UIScreen mainScreen].bounds.size.height;
+            
+            if (frame.origin.x + frame.size.width > screenWidth) {
+                frame.origin.x = screenWidth - frame.size.width - 5;
+            }
+            
+            if (frame.origin.y + frame.size.height > screenHeight) {
+                frame.origin.y = screenHeight - frame.size.height - 5;
+            }
+            sender.view.frame = frame;
+        }];
+    } else {
+        CGPoint point = [sender translationInView:[self windowView]];
+        sender.view.center = CGPointMake(sender.view.center.x + point.x, sender.view.center.y+point.y);
+        [sender setTranslation:CGPointMake(0, 0) inView:[self windowView]];
+    }
 }
+
+static BOOL _isShowLocus = NO;
 
 + (void)showUI
 {
@@ -158,9 +191,15 @@ static double _viewHeight = 50.0;
     });
     
     _locusView = [[LocusView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - _viewWidth - 5, [Locus safeAreaTop], _viewWidth, _viewHeight)];
-    _locusView.backgroundColor = [UIColor lightGrayColor];
+    _locusView.backgroundColor = [UIColor whiteColor];
     [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:_locusView];
     [_locusView addGestureRecognizer:[self gesture]];
+    
+    _locusView.layer.cornerRadius = 5;
+    _locusView.layer.masksToBounds = YES;
+    _locusView.layer.borderWidth = 1;
+    
+    _isShowLocus = YES;
 }
 
 + (void)hideUI
@@ -168,6 +207,24 @@ static double _viewHeight = 50.0;
     if (_locusView) {
         [_locusView removeFromSuperview];
     }
+    _isShowLocus = NO;
+}
+
+@end
+
+@interface UIWindow (Locus)
+
+@end
+
+@implementation UIWindow (Locus)
+
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (_isShowLocus) {
+        [Locus hideUI];
+    } else {
+        [Locus showUI];
+    }
+    return;
 }
 
 @end
