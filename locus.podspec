@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "locus"
-  s.version      = "1.1"
+  s.version      = "1.2"
   s.summary      = "track your code on debug"
   s.platform     = :ios, "7.0"
   
