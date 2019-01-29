@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.name         = "locus"
   s.version      = "1.1"
   s.summary      = "track your code on debug"
-  s.platform     = :ios, "11.0"
+  s.platform     = :ios, "7.0"
   
   s.description = %{
       track your code on debug
