@@ -25,6 +25,14 @@ char getTypeFromTypeDescription(const char *typeDescription)
     return type;
 }
 
+bool isTaggedPointer(id this)
+{
+#if SUPPORT_TAGGED_POINTERS
+    return ((uintptr_t)this & TAG_MASK);
+#else
+    return false;
+#endif
+}
 
 void printArgs(char *class_name, char* sel, va_list argp)
 {
@@ -41,8 +49,8 @@ void printArgs(char *class_name, char* sel, va_list argp)
             switch (type) {
                 case '@':
                 {
-                    NSString* description = [NSString stringWithFormat:@"%@", va_arg(argp, id)];
-                    printf("———— arg%ld: %s\n", i+1, description.UTF8String);
+                    id obj = va_arg(argp, id);
+                    printf("———— arg%ld: %p\n", i+1, (void *)obj);
                 }
                     break;
                 case 'B':
