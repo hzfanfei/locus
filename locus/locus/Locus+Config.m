@@ -15,11 +15,16 @@ static NSDictionary* config_cache = nil;
 + (NSDictionary *)getConfig
 {
     if (config_cache) {
-        return config_cache;
+        return [config_cache copy];
     }
+    
     NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"locus"];
     config_cache = [defaults objectForKey:@"config"];
-    return (NSDictionary *)[defaults objectForKey:@"config"];
+    if (config_cache == nil) {
+        config_cache = @{};
+    }
+    id result = (NSDictionary *)[defaults objectForKey:@"config"];
+    return result;
 }
 
 + (void)setConfig:(NSDictionary *)config

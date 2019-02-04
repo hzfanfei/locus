@@ -37,6 +37,7 @@ void printArgs(char *class_name, char* sel, va_list argp)
         for (NSInteger i = 0; i < [signature numberOfArguments] - 2; i++) {
             const char* typeDescription = [signature getArgumentTypeAtIndex:i + 2];
             char type = getTypeFromTypeDescription(typeDescription);
+            BOOL isSupport = YES;
             switch (type) {
                 case '@':
                 {
@@ -67,7 +68,12 @@ void printArgs(char *class_name, char* sel, va_list argp)
                     printf("———— arg%ld: %s\n", i+1, va_arg(argp, char *));
                     break;
                 default:
+                    printf("———— arg%ld: %s not support\n", i+1, typeDescription);
+                    isSupport = NO;
                     break;
+            }
+            if (!isSupport) {
+                break;
             }
         }
     }
