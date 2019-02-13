@@ -26,9 +26,6 @@
 
 #include "LocusArgPrinter.h"
 
-#include "hook_objc_msgSend.h"
-#include "hook_objc_msgSend_x86.h"
-
 static int lcs_print = 0;
 static int lcs_switch_open = 1;
 static int lcs_switch_close = 0;
@@ -131,28 +128,167 @@ void lcs_resume_print() {
     lcs_print = 1;
 }
 
+extern id hook_objc_msgSend(id, SEL, ...);
+
 #ifdef __arm64__
+
+__asm__  (
+          ".text\n"
+          ".global _hook_objc_msgSend\n"
+          
+          "_hook_objc_msgSend:\n"
+          
+          "stp q6, q7, [sp, #-32]!\n"
+          "stp q4, q5, [sp, #-32]!\n"
+          "stp q2, q3, [sp, #-32]!\n"
+          "stp q0, q1, [sp, #-32]!\n"
+          
+          "stp x6, x7, [sp, #-16]!\n"
+          "stp x4, x5, [sp, #-16]!\n"
+          "stp x2, x3, [sp, #-16]!\n"
+          "stp x0, x1, [sp, #-16]!\n"
+          "stp x8, lr, [sp, #-16]!\n"
+          
+          "bl _before_objc_msgSend\n"
+          
+          "ldp x8, lr, [sp], #16\n"
+          "stp x8, lr, [sp, #-16]!\n"
+          
+          "mov x0, lr\n"
+          
+          "bl _save_lr\n"
+          
+          "mov x9, x0\n"
+          
+          "ldp x8, lr, [sp], #16\n"
+          "ldp x0, x1, [sp], #16\n"
+          "ldp x2, x3, [sp], #16\n"
+          "ldp x4, x5, [sp], #16\n"
+          "ldp x6, x7, [sp], #16\n"
+          
+          "ldp q0, q1, [sp], #32\n"
+          "ldp q2, q3, [sp], #32\n"
+          "ldp q4, q5, [sp], #32\n"
+          "ldp q6, q7, [sp], #32\n"
+          
+          "blr x9\n"
+          "stp x0, x1, [sp, #-16]!\n"
+          "stp q0, q1, [sp, #-32]!\n"
+          "bl _get_lr\n"
+          "mov lr, x0\n"
+          "ldp q0, q1, [sp], #32\n"
+          "ldp x0, x1, [sp], #16\n"
+          "ret\n"
+          
+          "ret\n"
+);
+
+#else
+__asm__  (
+          ".text\n"
+          ".global _hook_objc_msgSend\n"
+          
+          "_hook_objc_msgSend:\n"
+          "pushq  %rbp\n"
+          "movq %rsp, %rbp\n"
+          "subq $0x210, %rsp\n"
+          
+          "movq  %xmm15, -0x210(%rbp)\n"
+          "movq  %xmm14, -0x200(%rbp)\n"
+          "movq  %xmm13, -0x190(%rbp)\n"
+          "movq  %xmm12, -0x180(%rbp)\n"
+          "movq  %xmm11, -0x170(%rbp)\n"
+          "movq  %xmm10, -0x160(%rbp)\n"
+          "movq  %xmm9, -0x150(%rbp)\n"
+          "movq  %xmm8, -0x140(%rbp)\n"
+          "movq  %xmm7, -0x130(%rbp)\n"
+          "movq  %xmm6, -0x120(%rbp)\n"
+          "movq  %xmm5, -0x110(%rbp)\n"
+          "movq  %xmm4, -0x100(%rbp)\n"
+          "movq  %xmm3, -0x90(%rbp)\n"
+          "movq  %xmm2, -0x80(%rbp)\n"
+          "movq  %xmm1, -0x70(%rbp)\n"
+          "movq  %xmm0, -0x60(%rbp)\n"
+          "movq  %rbx, -0x58(%rbp)\n"
+          "movq  %rdi, -0x50(%rbp)\n"
+          "movq  %rsi, -0x48(%rbp)\n"
+          "movq  %rdx, -0x40(%rbp)\n"
+          "movq  %rcx, -0x38(%rbp)\n"
+          "movq  %r8, -0x30(%rbp)\n"
+          "movq  %r9, -0x28(%rbp)\n"
+          "movq  %r12, -0x20(%rbp)\n"
+          "movq  %r13, -0x18(%rbp)\n"
+          "movq  %r14, -0x10(%rbp)\n"
+          "movq  %r15, -0x8(%rbp)\n"
+          
+          "call _before_objc_msgSend\n"
+          
+          "movq 0x8(%rbp), %rdi\n"
+          
+          "call _save_lr\n"
+          
+          "movq   -0x210(%rbp), %xmm15\n"
+          "movq   -0x200(%rbp), %xmm14\n"
+          "movq   -0x190(%rbp), %xmm13\n"
+          "movq   -0x180(%rbp), %xmm12\n"
+          "movq   -0x170(%rbp), %xmm11\n"
+          "movq   -0x160(%rbp), %xmm10\n"
+          "movq   -0x150(%rbp), %xmm9\n"
+          "movq   -0x140(%rbp), %xmm8\n"
+          "movq   -0x130(%rbp), %xmm7\n"
+          "movq   -0x120(%rbp), %xmm6\n"
+          "movq   -0x110(%rbp), %xmm5\n"
+          "movq   -0x100(%rbp), %xmm4\n"
+          "movq   -0x90(%rbp), %xmm3\n"
+          "movq   -0x80(%rbp), %xmm2\n"
+          "movq   -0x70(%rbp), %xmm1\n"
+          "movq   -0x60(%rbp), %xmm0\n"
+          "movq   -0x58(%rbp), %rbx\n"
+          "movq   -0x50(%rbp), %rdi\n"
+          "movq   -0x48(%rbp), %rsi\n"
+          "movq   -0x40(%rbp), %rdx\n"
+          "movq   -0x38(%rbp), %rcx\n"
+          "movq   -0x30(%rbp), %r8\n"
+          "movq   -0x28(%rbp), %r9\n"
+          "movq   -0x20(%rbp), %r12\n"
+          "movq   -0x18(%rbp), %r13\n"
+          "movq   -0x10(%rbp), %r14\n"
+          "movq   -0x8(%rbp), %r15\n"
+          
+          "addq $0x210, %rsp\n"
+          
+          "popq %rbp\n"
+          "addq $0x8, %rsp\n"
+          "call *%rax\n"
+          "pushq %rax\n"
+          "pushq %rdx\n"
+          
+          "subq $0x20, %rsp\n"
+          "movq  %xmm0, 0x0(%rsp)\n"
+          "movq  %xmm1, 0x10(%rsp)\n"
+          "call _get_lr\n"
+          "movq %rax, %r10\n"
+          "movq  0x0(%rsp), %xmm0\n"
+          "movq  0x10(%rsp), %xmm1\n"
+          "addq $0x20, %rsp\n"
+          
+          "popq %rdx\n"
+          "popq %rax\n"
+          "push %r10\n"
+          "retq\n"
+          "ret\n"
+          );
+#endif
 
 void lcs_start(LCSFilterBlock filter) {
     
     _filter_block = filter;
+    
+    lcs_resume_print();
     
     pthread_key_create(&_thread_switch_key, NULL);
     pthread_key_create(&_thread_lr_stack_key, NULL);
     rebind_symbols((struct rebinding[1]){{"objc_msgSend", hook_objc_msgSend, (void *)&orig_objc_msgSend}}, 1);
 }
-
-#else
-
-void lcs_start(LCSFilterBlock filter) {
-    
-    _filter_block = filter;
-    
-    pthread_key_create(&_thread_switch_key, NULL);
-    pthread_key_create(&_thread_lr_stack_key, NULL);
-    rebind_symbols((struct rebinding[1]){{"objc_msgSend", hook_objc_msgSend_x86, (void *)&orig_objc_msgSend}}, 1);
-}
-
-#endif
 
 
