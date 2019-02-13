@@ -183,7 +183,7 @@ __asm__  (
           "ret\n"
 );
 
-#else
+#elif __LP64__
 __asm__  (
           ".text\n"
           ".global _hook_objc_msgSend\n"
@@ -278,6 +278,10 @@ __asm__  (
           "retq\n"
           "ret\n"
           );
+#else
+    id hook_objc_msgSend(id obj, SEL sel, ...) {
+        return nil;
+    }
 #endif
 
 void lcs_start(LCSFilterBlock filter) {

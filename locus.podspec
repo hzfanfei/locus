@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.author             = { "fanfei" => "hzfanfei@163.com" }
   s.source       = { :git => "https://github.com/hzfanfei/locus.git", :tag => s.version }
   s.source_files = "locus/locus/*.{h,m,c}", "locus/locus/hook_objc_msgSend_x86.s"
-  s.public_header_files = "locus/**/*.h"
+  s.public_header_files = "locus/locus/*.h"
   s.requires_arc = true
   
 end
