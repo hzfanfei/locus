@@ -137,7 +137,11 @@ uintptr_t save_lr(id self, SEL sel, uintptr_t lr)
 
 void write_method_due_log(char* obj, char* sel, long due, long level) {
     if (_main_ptread == pthread_self()) {
-        fprintf(_log_file, "due time %ld [%s %s]\n", due, obj, sel);
+        if (level == 0) {
+            fprintf(_log_file, "↑ due time %ld [%s %s]\n", due, obj, sel);
+        } else {
+            fprintf(_log_file, "due time %ld [%s %s]\n", due, obj, sel);
+        }
     }
 }
 
