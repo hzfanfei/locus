@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "LocusArgPrinter.h"
 
-char getTypeFromTypeDescription(const char *typeDescription)
+char lcs_getTypeFromTypeDescription(const char *typeDescription)
 {
     char type = typeDescription[0];
     switch (type) {
@@ -35,7 +35,7 @@ void printArgs(char *class_name, char* sel, va_list argp)
     if ([signature numberOfArguments] > 2) {
         for (NSInteger i = 0; i < [signature numberOfArguments] - 2; i++) {
             const char* typeDescription = [signature getArgumentTypeAtIndex:i + 2];
-            char type = getTypeFromTypeDescription(typeDescription);
+            char type = lcs_getTypeFromTypeDescription(typeDescription);
             BOOL isSupport = YES;
             switch (type) {
                 case '@':

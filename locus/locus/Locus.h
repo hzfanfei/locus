@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)hideUI;
 
+// performance start
++ (void)startTestPerformance:(long)ms;
+
 @end
 
 NS_ASSUME_NONNULL_END

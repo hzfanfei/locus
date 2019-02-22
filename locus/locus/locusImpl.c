@@ -31,13 +31,20 @@ static int lcs_switch_open = 1;
 static int lcs_switch_close = 0;
 static pthread_key_t _thread_lr_stack_key;
 static LCSFilterBlock _filter_block = NULL;
+static long _due = 0;
 static pthread_key_t _thread_switch_key;
+static char _log_path[1024];
+static FILE * _log_file = NULL;
 __unused static id (*orig_objc_msgSend)(id, SEL, ...);
 
 typedef struct {
     void *pre;
     void *next;
     uintptr_t lr;
+    long long time;
+    char* obj;
+    char* sel;
+    long level;
 } thread_lr_stack;
 
 void lcs_open()
@@ -92,7 +99,14 @@ void before_objc_msgSend(id self, SEL sel, ...) {
 
 }
 
-uintptr_t save_lr(uintptr_t lr)
+long long lcs_getCurrentTime() {
+    struct timeval te;
+    gettimeofday(&te, NULL);
+    long long milliseconds = te.tv_sec*1000LL + te.tv_usec/1000;
+    return milliseconds;
+}
+
+uintptr_t save_lr(id self, SEL sel, uintptr_t lr)
 {
     thread_lr_stack* ls = pthread_getspecific(_thread_lr_stack_key);
     if (ls == NULL) {
@@ -100,6 +114,10 @@ uintptr_t save_lr(uintptr_t lr)
         ls->pre = NULL;
         ls->next = NULL;
         ls->lr = lr;
+        ls->obj = (char *)object_getClassName(self);
+        ls->sel = (char *)sel;
+        ls->time = lcs_getCurrentTime();
+        ls->level = 0;
         pthread_setspecific(_thread_lr_stack_key, (void *)ls);
     } else {
         thread_lr_stack* next = malloc(sizeof(thread_lr_stack));
@@ -107,15 +125,32 @@ uintptr_t save_lr(uintptr_t lr)
         next->pre = ls;
         next->next = NULL;
         next->lr = lr;
+        next->obj = (char *)object_getClassName(self);
+        next->sel = (char *)sel;
+        next->time = lcs_getCurrentTime();
+        next->level = ls->level + 1;
         pthread_setspecific(_thread_lr_stack_key, (void *)next);
     }
     return (uintptr_t)orig_objc_msgSend;
+}
+
+void write_method_due_log(char* obj, char* sel, long due, long level) {
+    char level_s[1024];
+    memset(level_s, 0, 1024);
+    for (int i = 0; i < level; i++) {
+        level_s[i] = '-';
+    }
+    fprintf(_log_file, "%s due time %ld [%s %s]\n", level_s, due, obj, sel);
 }
 
 uintptr_t get_lr() {
     thread_lr_stack* ls = pthread_getspecific(_thread_lr_stack_key);
     pthread_setspecific(_thread_lr_stack_key, (void *)ls->pre);
     uintptr_t lr = ls->lr;
+    long due = (long)(lcs_getCurrentTime() - ls->time);
+    if (_due > 0 && due > _due) {
+        write_method_due_log(ls->obj, ls->sel, due, ls->level);
+    }
     free(ls);
     return lr;
 }
@@ -152,9 +187,11 @@ __asm__  (
           "bl _before_objc_msgSend\n"
           
           "ldp x8, lr, [sp], #16\n"
+          "ldp x0, x1, [sp], #16\n"
+          "stp x0, x1, [sp, #-16]!\n"
           "stp x8, lr, [sp, #-16]!\n"
           
-          "mov x0, lr\n"
+          "mov x2, lr\n"
           
           "bl _save_lr\n"
           
@@ -223,7 +260,9 @@ __asm__  (
           
           "call _before_objc_msgSend\n"
           
-          "movq 0x8(%rbp), %rdi\n"
+          "movq   -0x50(%rbp), %rdi\n"
+          "movq   -0x48(%rbp), %rsi\n"
+          "movq 0x8(%rbp), %rdx\n"
           
           "call _save_lr\n"
           
@@ -291,6 +330,23 @@ void lcs_start(LCSFilterBlock filter) {
     lcs_resume_print();
     
     pthread_key_create(&_thread_switch_key, NULL);
+    pthread_key_create(&_thread_lr_stack_key, NULL);
+    rebind_symbols((struct rebinding[1]){{"objc_msgSend", hook_objc_msgSend, (void *)&orig_objc_msgSend}}, 1);
+}
+
+void lcs_start_performance(long ms, char* log_path) {
+    
+    memset(_log_path, 0, 1024);
+    memcpy(_log_path, log_path, strlen(log_path));
+    
+    _log_file = fopen(log_path, "w");
+    if (_log_file == NULL) {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+    
+    _due = ms;
+
     pthread_key_create(&_thread_lr_stack_key, NULL);
     rebind_symbols((struct rebinding[1]){{"objc_msgSend", hook_objc_msgSend, (void *)&orig_objc_msgSend}}, 1);
 }

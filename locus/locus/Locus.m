@@ -106,6 +106,15 @@ int reality(Class cls, SEL sel)
     lcs_start(filerBlockHolder);
 }
 
++ (void)startTestPerformance:(long)ms
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"locus.log"];
+    
+    lcs_start_performance(ms, (char* )path.UTF8String);
+}
+
 + (void)stopPrint
 {
     lcs_stop_print();
