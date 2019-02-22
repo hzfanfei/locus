@@ -23,8 +23,9 @@
 #include <objc/runtime.h>
 #include <dispatch/dispatch.h>
 #import <objc/runtime.h>
-
 #include "LocusArgPrinter.h"
+
+static pthread_t _main_ptread;
 
 static int lcs_print = 0;
 static int lcs_switch_open = 1;
@@ -135,12 +136,9 @@ uintptr_t save_lr(id self, SEL sel, uintptr_t lr)
 }
 
 void write_method_due_log(char* obj, char* sel, long due, long level) {
-    char level_s[1024];
-    memset(level_s, 0, 1024);
-    for (int i = 0; i < level; i++) {
-        level_s[i] = '-';
+    if (_main_ptread == pthread_self()) {
+        fprintf(_log_file, "due time %ld [%s %s]\n", due, obj, sel);
     }
-    fprintf(_log_file, "%s due time %ld [%s %s]\n", level_s, due, obj, sel);
 }
 
 uintptr_t get_lr() {
@@ -346,7 +344,7 @@ void lcs_start_performance(long ms, char* log_path) {
     }
     
     _due = ms;
-
+    _main_ptread = pthread_self();
     pthread_key_create(&_thread_lr_stack_key, NULL);
     rebind_symbols((struct rebinding[1]){{"objc_msgSend", hook_objc_msgSend, (void *)&orig_objc_msgSend}}, 1);
 }
