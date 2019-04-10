@@ -58,7 +58,7 @@ int reality(Class cls, SEL sel)
         Class klass = objc_getClass(className);
 
         NSDictionary* config = [Locus getConfig];
-        if (config) {
+        if ([config count] > 0) {
             BOOL system = [[config objectForKey:LOCUS_PRINT_SYSTEM_CLASS] boolValue];
             BOOL custom = [[config objectForKey:LOCUS_PRINT_CUSTOM_CLASS] boolValue];
             BOOL super_methods = [[config objectForKey:LOCUS_PRINT_SUPER_METHODS] boolValue];
