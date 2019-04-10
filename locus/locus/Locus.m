@@ -50,11 +50,11 @@ int reality(Class cls, SEL sel)
     NSArray* classNames = [self getClassNamesFromBundle];
     
     id filter = ^int(char *className, char *selName) {
-        NSString* sClass = [NSString stringWithFormat:@"%s", className];
+        NSString* sClass = [NSString stringWithUTF8String:className];
         if ([[sClass lowercaseString] hasPrefix:@"locus"]) {
             return 0;
         }
-        NSString* sSelector = [NSString stringWithFormat:@"%s", selName];
+        NSString* sSelector = [NSString stringWithUTF8String:selName];
         Class klass = objc_getClass(className);
 
         NSDictionary* config = [Locus getConfig];
