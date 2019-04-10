@@ -27,8 +27,8 @@ char lcs_getTypeFromTypeDescription(const char *typeDescription)
 
 void printArgs(char *class_name, char* sel, va_list argp)
 {
-    NSString* sClass = [NSString stringWithFormat:@"%s", class_name];
-    NSString* sSelector = [NSString stringWithFormat:@"%s", sel];
+    NSString* sClass = [NSString stringWithUTF8String:class_name];
+    NSString* sSelector = [NSString stringWithUTF8String:sel];
     Class cls = NSClassFromString(sClass);
     SEL selector = NSSelectorFromString(sSelector);
     NSMethodSignature *signature = [cls instanceMethodSignatureForSelector:selector];
