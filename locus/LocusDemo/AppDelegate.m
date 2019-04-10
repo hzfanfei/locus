@@ -7,9 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import "locus.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic) id block;
 
 @end
 
@@ -17,13 +18,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    lcs_start(^int(char *className, char *selName) {
-        if (strncmp(className, "LCUS", 4) == 0) {
-            return 1;
-        }
-        return 0;
-    });
     
     return YES;
 }

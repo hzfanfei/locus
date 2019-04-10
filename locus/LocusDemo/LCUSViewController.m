@@ -15,6 +15,7 @@ static NSString* kLCUSTableViewCellIdentifier = @"kLCUSTableViewCellIdentifier";
 @interface LCUSViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic) LCUSTableView* tableView;
+@property (nonatomic) BOOL isShowLocus;
 
 @end
 
@@ -49,6 +50,5 @@ static NSString* kLCUSTableViewCellIdentifier = @"kLCUSTableViewCellIdentifier";
     
     return cell;
 }
-
 
 @end
